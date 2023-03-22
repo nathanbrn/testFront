@@ -40,7 +40,7 @@ export const Label = styled.label``
 export const Input = styled.input`
     width: 90%;
     padding: 12px;
-    border: transparent;
+    border: rgba(0, 0, 0, 0.6);
 `
 
 export const Button = styled.button`
