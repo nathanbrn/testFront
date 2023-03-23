@@ -4,7 +4,7 @@ import { Home } from "./pages/Home"
 
 export function Router() {
     return (
-        <BrowserRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
