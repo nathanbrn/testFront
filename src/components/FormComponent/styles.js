@@ -40,7 +40,9 @@ export const Label = styled.label``
 export const Input = styled.input`
     width: 90%;
     padding: 12px;
-    border: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    margin-bottom: 12px;
 `
 
 export const Button = styled.button`
@@ -55,4 +57,9 @@ export const Button = styled.button`
     &:hover {
         background-color: #ADD8E6;
     }
+`
+
+export const TextError = styled.p`
+    color: red;
+    font-size: 12px;
 `

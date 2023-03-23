@@ -8,23 +8,39 @@ import {
     Input, 
     Button, 
     Label, 
-    TextTitle
+    TextTitle,
+    TextError
 } from "./styles";
+import { useNavigate } from "react-router-dom";
 
 export function Form() {
     const [Email, setEmail] = useState("")
     const [Senha, setSenha] = useState("")
     const [isLogged, setIsLogged] = useState(false)
-        
-    useEffect(() => {
+    const [error, setError] = useState(false)
+    const navigate = useNavigate()
+
+    async function handleLogin(event) {
+        event.preventDefault()
         api.get("/usuarios").then(({ data }) => {
-            const userEmail = data.find((user) => user.email === Email)
-            console.log(userEmail)
+            const emails = data.map(usuario => usuario.email)
+            const senhas = data.map(usuario => usuario.password)
+
+            if(!emails.includes(Email) && !senhas.includes(Senha)){
+                console.log("Credenciais inválidas")
+                setError(true)
+            } else {
+                setIsLogged(true)
+            }
+
         }).catch((error) => {
-            console.log(error)
-            console.log(typeof Senha)
+            console.log("Erro ao carregar usuários", error)
         })
-    }, [])
+    }
+
+    if(isLogged) {
+        navigate("/home")
+    }
 
     return (
         <FormContainer>
@@ -56,16 +72,10 @@ export function Form() {
                     }}
                 />
             </ContainerInput>
+            {error && <TextError>Credenciais inválidas</TextError>}
             <ContainerButton>
                 <Button 
-                    onClick={(event) => {
-                        event.preventDefault()
-                        if(isLogged)
-                            console.log("Logado com sucesso")
-                        else
-                            console.log("Dados inválidos")
-                    }}
-
+                    onClick={(event) => handleLogin(event)}
                 >
                     Login
                 </Button>
