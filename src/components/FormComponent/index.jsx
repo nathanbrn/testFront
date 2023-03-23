@@ -12,18 +12,18 @@ import {
 } from "./styles";
 
 export function Form() {
-    const [Email, setEmail] = useState("");
-    const [Senha, setSenha] = useState("");
-    const [isLogged, setIsLogged] = useState(false);
-
+    const [Email, setEmail] = useState("")
+    const [Senha, setSenha] = useState("")
+    const [isLogged, setIsLogged] = useState(false)
+        
     useEffect(() => {
-        api.get('/usuarios')
-          .then(({ data }) => {
-            const { email, password } = data
-            console.log(email, password)
-            if(Email === email && Senha === password)
-                setIsLogged(true)
-          })
+        api.get("/usuarios").then(({ data }) => {
+            const userEmail = data.find((user) => user.email === Email)
+            console.log(userEmail)
+        }).catch((error) => {
+            console.log(error)
+            console.log(typeof Senha)
+        })
     }, [])
 
     return (
@@ -58,8 +58,8 @@ export function Form() {
             </ContainerInput>
             <ContainerButton>
                 <Button 
-                    onClick={() => {
-                        
+                    onClick={(event) => {
+                        event.preventDefault()
                         if(isLogged)
                             console.log("Logado com sucesso")
                         else
