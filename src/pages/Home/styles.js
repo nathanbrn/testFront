@@ -22,6 +22,9 @@ export const Button = styled.button`
     padding: 12px;
     border: transparent;
     border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     margin-bottom: 12px;
     transition: .4s ease-in-out;
@@ -64,4 +67,47 @@ export const Card = styled.div`
         font-size: .7rem;
         max-width: 15rem;
     }
+
+    `
+export const CardCriateUser = styled.form`
+    width: 400px;
+    height: 500px;
+    background-color: #cacaca;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 8px;
+    position: absolute;
+    top: 10%;
+    left: 50;
+    transition: .4 ease-in-out;
+    div:nth-child(1) {
+        margin-top: 12px;
+    }
+    div:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        margin-top: 7rem;
+    }
+    div:nth-child(3) {
+        margin-top: 50px;
+    }
+`
+
+export const Input = styled.input`
+    width: 90%;
+    padding: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    margin-bottom: 12px;
+`
+
+export const TextError = styled.p`
+    color: red;
+    font-size: 12px;
 `

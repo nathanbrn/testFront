@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { api } from "../../utils/api";
 import { 
     ContainerInput, 
@@ -12,6 +11,7 @@ import {
     TextError
 } from "./styles";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export function Form() {
     const [Email, setEmail] = useState("")
@@ -25,14 +25,14 @@ export function Form() {
         api.get("/usuarios").then(({ data }) => {
             const emails = data.map(usuario => usuario.email)
             const senhas = data.map(usuario => usuario.password)
-
-            if(!emails.includes(Email) && !senhas.includes(Senha)){
+            
+            if(!emails.includes(Email) || !senhas.includes(Senha)){
                 console.log("Credenciais inválidas")
                 setError(true)
             } else {
                 setIsLogged(true)
             }
-
+            
         }).catch((error) => {
             console.log("Erro ao carregar usuários", error)
         })
@@ -41,6 +41,10 @@ export function Form() {
     if(isLogged) {
         navigate("/home")
     }
+
+    useEffect(() => {
+        toast.warning("Digite as informações corretas")
+    }, [])
 
     return (
         <FormContainer>
