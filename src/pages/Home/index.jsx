@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Container, Button, Card, ContainerCards, CardCriateUser, Input } from "./styles"
+import { PopUpWrapper, Container, Button, Card, ContainerCards, CardCriateUser, Input } from "./styles"
 import { api } from "../../utils/api"
 import { formatDate } from "../../utils/date"
 import { toast } from "react-toastify"
@@ -33,12 +33,25 @@ export function Home() {
         api.post('/clientes', {
             email: email,
             name: nome,
-            vendedorId: idUsuario
+            vendedorId: parseInt(idUsuario)
         }).then(response => {
             console.log(response)
             toast.success("Usuário criado com sucesso")
         }).catch(err => {
             console.log(err)
+            toast.error("Erro ao criar usuário")
+        })
+
+        setPopUpForm(false)
+    }
+
+    function handleDelClient(id) {
+        api.delete(`/clientes/${id}`).then(response => {
+            console.log(response)
+            toast.success("Usuário deletado com sucesso")
+        }).catch(err => {
+            console.log(err)
+            toast.error("Erro ao deletar usuário")
         })
     }
 
@@ -46,14 +59,19 @@ export function Home() {
         <Container>
             <h1>Home</h1>
             <ContainerCards>
-                {informacoes.map(info => (
-                    <Card key={info.id}>
-                        <h2>{ info.name }</h2>
-                        <p>Email: { info.email }</p>
+                {informacoes.map(({ id, name, email, createdAt, updatedAt }) => (
+                    <Card key={id}>
+                        <h2>{ name }</h2>
+                        <p>Email: { email }</p>
                         <div>
-                            <p>Criado em: { formatDate(info.createdAt) }</p>
-                            <p>Ultima atualização: { formatDate(info.updatedAt) }</p>
+                            <p>Criado em: { formatDate(createdAt) }</p>
+                            <p>Ultima atualização: { formatDate(updatedAt) }</p>
                         </div>
+                        <Button
+                            onClick={() => handleDelClient(id)}
+                        >
+                            Deletar
+                        </Button>
                     </Card>
                 ))}
             </ContainerCards>
@@ -85,21 +103,31 @@ export function Home() {
                         >
                             Criar
                         </Button>
+                        <Button
+                            onClick={() => setPopUpForm(false)}
+                        >
+                            Fechar
+                        </Button>
                     </div>
                 </CardCriateUser>
             )}
-            {!popUpForm && (
-                <Button
-                onClick={() => setPopUpForm(true)}
-                >
-                    Criar Usuário
-                </Button>
+            {popUpForm && (
+                <PopUpWrapper></PopUpWrapper>
             )}
-            <Button
-                onClick={() => navigate("/")}
-            >
-                Voltar
-            </Button>
+            {!popUpForm && (
+                <>
+                    <Button
+                        onClick={() => setPopUpForm(true)}
+                    >
+                        Cadastrar Cliente
+                    </Button>
+                    <Button
+                        onClick={() => navigate("/")}
+                    >
+                        Voltar
+                    </Button>
+                </>
+            )}
         </Container>
     )
 }

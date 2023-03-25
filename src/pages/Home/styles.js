@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const Container = styled.div`
     width: 80%;
-    height: 90vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,6 +52,7 @@ export const Card = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    align-items: center;
     padding: 8px;
 
     h2 {
@@ -68,6 +69,10 @@ export const Card = styled.div`
         max-width: 15rem;
     }
 
+    Button {
+        margin-top: 8px;
+    }
+
     `
 export const CardCriateUser = styled.form`
     width: 400px;
@@ -82,7 +87,7 @@ export const CardCriateUser = styled.form`
     position: absolute;
     top: 10%;
     left: 50;
-    transition: .4 ease-in-out;
+    z-index: 2;
     div:nth-child(1) {
         margin-top: 12px;
     }
@@ -97,6 +102,19 @@ export const CardCriateUser = styled.form`
     div:nth-child(3) {
         margin-top: 50px;
     }
+`
+
+export const PopUpWrapper = styled.div`
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1; 
 `
 
 export const Input = styled.input`
